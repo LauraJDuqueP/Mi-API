@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
         data: result,
       });
     } else {
-      +res.status(404).send(`El mombre de la pelicula no es valido`);
+      res.status(404).send(`El mombre de la pelicula no es valido`);
     }
   } else {
     res.status(200).send(movieMocks);

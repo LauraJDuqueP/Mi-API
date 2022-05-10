@@ -1,7 +1,7 @@
 const routerApi = require('./routes/index.js');
 const express = require('express'); //requerimos a express para crear nuestro pirmer servidor
 const app = express(); // aqui creo mi aplicacion
-const port = 3000; // declaro donde quiero que corra mi aplicaicon
+const port = process.env.PORT || 3000; // declaro donde quiero que corra mi aplicaicon
 const cors = require('cors');
 app.use(express.json());
 app.use(
@@ -20,3 +20,5 @@ app.listen(port, () => {
 //el desmarcado y marcado de favoritos es un endpoint aparte que debo investigarsh
 
 // endpoint de su usuario y su detalle con susu favoritos
+
+// https://miapi-movies.herokuapp.com/    deploy en heroku
