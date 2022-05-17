@@ -25,3 +25,8 @@ acontinunacion las rutas.
 
 * registro ??
 * filter y ordenamiento ??
+
+Despliegue en heroku
+
+https://miapi-movies.herokuapp.com/ deploy en heroku
+https://miapi-movies.herokuapp.com/movies/v1 // deploy con ruta de mi api

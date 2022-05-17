@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const TweetLogin = require('../servicios/tweetLogin');
+
+const service = new TweetLogin();
 
 // ruta http://localhost:3000/movies/v1/loginTweet
 
@@ -8,11 +11,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const user = req.body;
-  if (user.name && user.password) {
+  const body = req.body;
+  if (body) {
+    const result = service.create(body);
     res.status(200).json({
-      message: `Hola ${user.name} ha ingresado con su usuario de tweeter :)`,
-      data: user,
+      message: `Login por Tweeter`,
+      data: result,
     });
   } else {
     res.status(404).send(`No se a logeado correctamente el usuario`);

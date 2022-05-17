@@ -22,3 +22,4 @@ app.listen(port, () => {
 // endpoint de su usuario y su detalle con susu favoritos
 
 // https://miapi-movies.herokuapp.com/    deploy en heroku
+// https://miapi-movies.herokuapp.com/movies/v1  // deploy con ruta de mi api

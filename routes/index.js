@@ -4,6 +4,7 @@ const moviesHomeRouter = require('./moviesHome');
 const loginRouter = require('./login');
 const faceLoginRouter = require('./faceLogin');
 const tweetLogin = require('./tweetLogin');
+const registerRouter = require('./register');
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ function routerApi(app) {
   router.use('/login', loginRouter);
   router.use('/loginFacebook', faceLoginRouter);
   router.use('/loginTweet', tweetLogin);
+  router.use('/register', registerRouter);
 }
 
 module.exports = routerApi;

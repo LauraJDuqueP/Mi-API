@@ -1,9 +1,9 @@
 const express = require('express');
-// const { send } = require('express/lib/response');
-// const res = require('express/lib/response');
 const router = express.Router();
 // ruta ... http://localhost:3000/movies/v1/loginFacebook
+const FaceLogin = require('../servicios/faceLogin');
 
+const service = new FaceLogin();
 /// esto es solo para ver que la ruta funcione
 router.get('/', (req, res) => {
   res.stantus(201).send(`
@@ -15,11 +15,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const user = req.body;
-  if (user.name && user.password) {
+  const body = req.body;
+  if (body) {
+    const result = service.create(body);
     res.status(200).json({
-      message: `Hola ${user.name} ha ingresado con su usuario de facebook :)`,
-      data: user,
+      message: `Login con Facebook`,
+      data: result,
     });
   } else {
     res.status(404).send(`No se a logeado correctamente el usuario`);
