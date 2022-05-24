@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
   `);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const body = req.body;
     const result = await service.create(body);
@@ -23,9 +23,10 @@ router.post('/', async (req, res) => {
       data: result,
     });
   } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
+    // res.status(404).json({
+    //   message: error.message,
+    // });
+    next(error);
   }
 });
 

@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 // este post recibe el usuario y la contraseña
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const body = req.body;
     if (body) {
@@ -26,9 +26,10 @@ router.post('/', async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
+    // res.status(404).json({
+    //   message: error.message,
+    // });
+    next(error);
   }
 });
 

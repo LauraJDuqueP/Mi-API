@@ -30,3 +30,7 @@ Despliegue en heroku
 
 https://miapi-movies.herokuapp.com/ deploy en heroku
 https://miapi-movies.herokuapp.com/movies/v1 // deploy con ruta de mi api
+
+- cree la logica de la ruta y los servicios: para hacer control de los errores y mantener un buen status code:
+  voy a utilizar boom.
+  Para esto instalare la libreria boom.

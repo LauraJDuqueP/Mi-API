@@ -12,7 +12,7 @@ const MoviesHome = require('../servicios/moviesHome');
 
 const service = new MoviesHome();
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   // aqui deberia ver movies ....
   try {
     const search = req.query.search;
@@ -32,13 +32,14 @@ router.get('/', async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
+    // res.status(404).json({
+    //   message: error.message,
+    // });
+    next(error);
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
     if (id) {
@@ -56,9 +57,10 @@ router.get('/:id', async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
+    // res.status(404).json({
+    //   message: error.message,
+    // });
+    next(error);
   }
 });
 

@@ -3,12 +3,23 @@ const express = require('express'); //requerimos a express para crear nuestro pi
 const app = express(); // aqui creo mi aplicacion
 const port = process.env.PORT || 3000; // declaro donde quiero que corra mi aplicaicon
 const cors = require('cors');
+const {
+  allErrors,
+  errorHandler,
+  boomError,
+} = require('./Middleware/errorHandlers');
+
 app.use(express.json());
 app.use(
   cors({
     origin: '*',
   })
 );
+
+app.use(allErrors);
+app.use(errorHandler);
+app.use(boomError);
+
 routerApi(app);
 
 app.listen(port, () => {

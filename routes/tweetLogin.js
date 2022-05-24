@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   res.send(`Aquí lo que va es el login con acceso por tweeter  jijij :) `);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const body = req.body;
     if (body) {
@@ -21,9 +21,10 @@ router.post('/', async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(400).json({
-      message: error.message,
-    });
+    // res.status(400).json({
+    //   message: error.message,
+    // });
+    next(error);
   }
 });
 
