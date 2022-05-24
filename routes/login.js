@@ -15,16 +15,20 @@ router.get('/', (req, res) => {
 });
 
 // este post recibe el usuario y la contraseña
-router.post('/', (req, res) => {
-  const body = req.body;
-  if (body) {
-    const result = service.create(body);
-    res.status(200).json({
-      message: 'LOGIN',
-      data: result,
+router.post('/', async (req, res) => {
+  try {
+    const body = req.body;
+    if (body) {
+      const result = await service.create(body);
+      res.status(200).json({
+        message: 'LOGIN',
+        data: result,
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
     });
-  } else {
-    res.status(404).send(`No has escrito correctamente los datos`);
   }
 });
 

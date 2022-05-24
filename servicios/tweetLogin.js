@@ -1,11 +1,14 @@
 const dataUser = require('../DataBase/dataUser');
 
 class TweetLogin {
-  create({ user, password }) {
+  async create({ user, password }) {
+    if (!user || !password) {
+      throw new Error(`No has escrito correctamente los datos`);
+    }
     const result = dataUser.find((u) => u.user === user);
     if (result) {
       if (result.password === password) {
-        return result;
+        return `Te logiaste correctamente con Tweeter`;
       } else {
         return `La contraseña es incorrecta`;
       }

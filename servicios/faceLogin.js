@@ -1,16 +1,19 @@
 const dataUser = require('../DataBase/dataUser');
 
 class FaceLogin {
-  create({ user, password }) {
+  async create({ user, password }) {
+    if (!user || !password) {
+      throw new Error(`No has escrito correctamente los datos`);
+    }
     const result = dataUser.find((u) => u.user === user);
     if (result) {
       if (result.password === password) {
-        return result;
+        return `Te logiaste correctamente con Facebook`;
       } else {
         return `La contraseña es incorrecta`;
       }
     } else {
-      return `El usuario es incorrecto o no existe`;
+      return 'El usuario es incorrecto o no existe';
     }
   }
 }

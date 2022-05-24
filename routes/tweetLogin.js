@@ -10,16 +10,20 @@ router.get('/', (req, res) => {
   res.send(`Aquí lo que va es el login con acceso por tweeter  jijij :) `);
 });
 
-router.post('/', (req, res) => {
-  const body = req.body;
-  if (body) {
-    const result = service.create(body);
-    res.status(200).json({
-      message: `Login por Tweeter`,
-      data: result,
+router.post('/', async (req, res) => {
+  try {
+    const body = req.body;
+    if (body) {
+      const result = await service.create(body);
+      res.status(200).json({
+        message: `Login por Tweeter`,
+        data: result,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
     });
-  } else {
-    res.status(404).send(`No se a logeado correctamente el usuario`);
   }
 });
 

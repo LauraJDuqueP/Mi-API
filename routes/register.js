@@ -6,18 +6,19 @@ const register = require('../servicios/register');
 
 const service = new register();
 
-router.post('/', (req, res) => {
-  const body = req.body;
-  if (body) {
-    const result = service.create(body);
-    res.status(200).json({
-      message: 'El usuario que creaste es',
-      data: result,
-    });
-  } else {
+router.post('/', async (req, res) => {
+  try {
+    const body = req.body;
+    if (body) {
+      const result = await service.create(body);
+      res.status(200).json({
+        message: 'El usuario es:',
+        data: result,
+      });
+    }
+  } catch (error) {
     res.status(400).json({
-      message: `El usuario o la contraseña son invalidos`,
-      data: body,
+      message: error.message,
     });
   }
 });

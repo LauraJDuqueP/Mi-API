@@ -14,16 +14,18 @@ router.get('/', (req, res) => {
   `);
 });
 
-router.post('/', (req, res) => {
-  const body = req.body;
-  if (body) {
-    const result = service.create(body);
+router.post('/', async (req, res) => {
+  try {
+    const body = req.body;
+    const result = await service.create(body);
     res.status(200).json({
       message: `Login con Facebook`,
       data: result,
     });
-  } else {
-    res.status(404).send(`No se a logeado correctamente el usuario`);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
   }
 });
 
