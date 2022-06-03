@@ -10,7 +10,9 @@ class Login {
     const result = dataUser.find((u) => u.user === user);
     if (result) {
       if (result.password === password) {
-        return `Te logiaste correctamente`;
+        const u = {};
+        u.name = result.user;
+        return u;
       } else {
         return `La contraseña es incorrecta`;
       }
