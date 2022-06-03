@@ -16,11 +16,11 @@ app.use(
   })
 );
 
-app.use(allErrors);
-app.use(errorHandler);
-app.use(boomError);
-
 routerApi(app);
+
+app.use(allErrors);
+app.use(boomError);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log('Mi API se escucha por aqui ' + port);

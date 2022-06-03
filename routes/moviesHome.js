@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const MoviesHome = require('../servicios/moviesHome');
+const validator = require('../Middleware/validarShemas');
+const { searchMovie } = require('../esquemas/shemas');
 
 // ruta http://localhost:3000/movies/v1/moviesHome
 
@@ -12,7 +14,7 @@ const MoviesHome = require('../servicios/moviesHome');
 
 const service = new MoviesHome();
 
-router.get('/', async (req, res, next) => {
+router.get('/', validator(searchMovie, 'search'), async (req, res, next) => {
   // aqui deberia ver movies ....
   try {
     const search = req.query.search;

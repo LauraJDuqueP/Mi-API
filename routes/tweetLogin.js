@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const TweetLogin = require('../servicios/tweetLogin');
+const validator = require('../Middleware/validarShemas');
+const { createUSer } = require('../esquemas/shemas');
 
 const service = new TweetLogin();
 
 // ruta http://localhost:3000/movies/v1/loginTweet
 
-router.get('/', (req, res) => {
-  res.send(`Aquí lo que va es el login con acceso por tweeter  jijij :) `);
-});
-
-router.post('/', async (req, res, next) => {
+router.post('/', validator(createUSer, 'body'), async (req, res, next) => {
   try {
     const body = req.body;
     if (body) {

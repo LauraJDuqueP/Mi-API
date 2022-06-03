@@ -1,8 +1,5 @@
 const movieMocks = [
   {
-    Detalle: '------Esta es MI API y esta es la base de datos-----',
-  },
-  {
     id: '2baf70d1-42bb-4437-b551-e5fed5a87abe',
     title: 'Castle in the Sky',
     original_title: '天空の城ラピュタ',

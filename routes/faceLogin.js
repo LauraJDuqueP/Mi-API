@@ -2,19 +2,13 @@ const express = require('express');
 const router = express.Router();
 // ruta ... http://localhost:3000/movies/v1/loginFacebook
 const FaceLogin = require('../servicios/faceLogin');
+const validator = require('../Middleware/validarShemas');
+const { createUSer } = require('../esquemas/shemas');
 
 const service = new FaceLogin();
 /// esto es solo para ver que la ruta funcione
-router.get('/', (req, res) => {
-  res.stantus(201).send(`
-  Aquí va un bonito login de face.....
-  <
-  < 
-  recordar que aquí va un post. 
-  `);
-});
 
-router.post('/', async (req, res, next) => {
+router.post('/', validator(createUSer, 'body'), async (req, res, next) => {
   try {
     const body = req.body;
     const result = await service.create(body);
