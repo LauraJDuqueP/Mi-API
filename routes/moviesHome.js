@@ -1,55 +1,68 @@
-const movieMocks = require('../DataBase/movieMocks');
 const express = require('express');
 const router = express.Router();
+const MoviesHome = require('../servicios/moviesHome');
+const validator = require('../Middleware/validarShemas');
+const { searchMovie } = require('../esquemas/shemas');
 
 // ruta http://localhost:3000/movies/v1/moviesHome
 
+// http://localhost:3000/movies/v1/moviesHome?search=
+
+// http://localhost:3000/movies/v1/moviesHome/2baf70d1-42bb-4437-b551-e5fed5a87abe
+
 // /moviesHome
 
-router.get('/', (req, res) => {
-  // Esta es mi base de datos, vista como un json
+const service = new MoviesHome();
+
+router.get('/', validator(searchMovie, 'search'), async (req, res, next) => {
   // aqui deberia ver movies ....
-  // vere las cards de las peliculas con inf que obtendra de la basde de datos
+  try {
+    const search = req.query.search;
 
-  // *tiene un criterio de busqueda (search) aqui lo hago yo
-
-  // http://localhost:3000/movies/v1/moviesHome?search=
-  const search = req.query.search;
-
-  if (search) {
-    const result = movieMocks.find((peli) => peli.title === search);
-    if (result) {
+    if (search) {
+      const result = await service.search(search);
       res.status(200).json({
         message: 'la informacion de la pelicula que elegiste es ',
         data: result,
       });
     } else {
-      res.status(404).send(`El mombre de la pelicula no es valido`);
+      const movilist = await service.getMovies();
+      res.status(200).json({
+        message: 'Esta es mi banco de peliculas',
+        data: movilist,
+        // vere las cards de las peliculas con inf que obtendra de la basde de datos
+      });
     }
-  } else {
-    res.status(200).send(movieMocks);
-    // vere las cards de las peliculas con inf que obtendra de la basde de datos
+  } catch (error) {
+    // res.status(404).json({
+    //   message: error.message,
+    // });
+    next(error);
   }
 });
 
-// http://localhost:3000/movies/v1/moviesHome/2baf70d1-42bb-4437-b551-e5fed5a87abe  ejemplo
-router.get('/:id', (req, res) => {
-  const id = req.params.id;
-  if (id) {
-    const see = movieMocks.find((idmovie) => idmovie.id === id);
-    if (see) {
+router.get('/:id', async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    if (id) {
+      const see = await service.searchById(id);
       res.status(200).json({
-        message: `Hola este id es de la pelicula ${movieMocks.title} :)`,
+        message: `Hola este id es de la pelicula ${see.id} y su nombre es ${see.title} :)`,
         data: see,
-
         // vere las cards de las peliculas con inf que obtendra de la basde de datos
       });
     } else {
-      res.send('El id de la pelicula es erroneo');
+      const movilist = await service.getMovies();
+      res.status(200).json({
+        message: 'Esta es mi banco de peliculas',
+        data: movilist,
+      });
     }
-  } else {
-    // res.status(200).send(movieMocks);
-    res.send('no va');
+  } catch (error) {
+    // res.status(404).json({
+    //   message: error.message,
+    // });
+    next(error);
   }
 });
 

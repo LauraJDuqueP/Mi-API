@@ -3,13 +3,24 @@ const express = require('express'); //requerimos a express para crear nuestro pi
 const app = express(); // aqui creo mi aplicacion
 const port = process.env.PORT || 3000; // declaro donde quiero que corra mi aplicaicon
 const cors = require('cors');
+const {
+  allErrors,
+  errorHandler,
+  boomError,
+} = require('./Middleware/errorHandlers');
+
 app.use(express.json());
 app.use(
   cors({
     origin: '*',
   })
 );
+
 routerApi(app);
+
+app.use(allErrors);
+app.use(boomError);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log('Mi API se escucha por aqui ' + port);
@@ -22,3 +33,4 @@ app.listen(port, () => {
 // endpoint de su usuario y su detalle con susu favoritos
 
 // https://miapi-movies.herokuapp.com/    deploy en heroku
+// https://miapi-movies.herokuapp.com/movies/v1  // deploy con ruta de mi api

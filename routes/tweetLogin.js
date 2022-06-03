@@ -1,21 +1,28 @@
 const express = require('express');
 const router = express.Router();
+const TweetLogin = require('../servicios/tweetLogin');
+const validator = require('../Middleware/validarShemas');
+const { createUSer } = require('../esquemas/shemas');
+
+const service = new TweetLogin();
 
 // ruta http://localhost:3000/movies/v1/loginTweet
 
-router.get('/', (req, res) => {
-  res.send(`Aquí lo que va es el login con acceso por tweeter  jijij :) `);
-});
-
-router.post('/', (req, res) => {
-  const user = req.body;
-  if (user.name && user.password) {
-    res.status(200).json({
-      message: `Hola ${user.name} ha ingresado con su usuario de tweeter :)`,
-      data: user,
-    });
-  } else {
-    res.status(404).send(`No se a logeado correctamente el usuario`);
+router.post('/', validator(createUSer, 'body'), async (req, res, next) => {
+  try {
+    const body = req.body;
+    if (body) {
+      const result = await service.create(body);
+      res.status(200).json({
+        message: `Login por Tweeter`,
+        data: result,
+      });
+    }
+  } catch (error) {
+    // res.status(400).json({
+    //   message: error.message,
+    // });
+    next(error);
   }
 });
 
