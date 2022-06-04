@@ -14,10 +14,10 @@ class Login {
         u.name = result.user;
         return u;
       } else {
-        return `La contraseña es incorrecta`;
+        throw boom.badRequest(`the password is incorrecta`);
       }
     } else {
-      return `El usuario es incorrecto o no existe`;
+      throw boom.badRequest(`the user is incorrect or does not exist`);
     }
   }
 }
